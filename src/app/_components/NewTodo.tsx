@@ -18,6 +18,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+import { toast } from "sonner";
+
 import { SquarePlus } from "lucide-react";
 
 export default function NewTodo({
@@ -32,8 +34,12 @@ export default function NewTodo({
   });
 
   const addTodo = trpc.addTodo.useMutation({
-    onSettled: () => {
+    onSuccess: () => {
+      toast.success("Tarefa criada com sucesso.");
       getTodos.refetch();
+    },
+    onError: (error) => {
+      toast.error("Erro ao criar a tarefa: " + error.message);
     },
   });
 
