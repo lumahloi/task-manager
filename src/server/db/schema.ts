@@ -6,4 +6,5 @@ export const todos = sqliteTable("todos", {
   titulo: text("titulo").notNull(),
   descricao: text("descricao"),
   dataCriacao: text("dataCriacao").notNull().default(sql`(current_timestamp)`),
+  status: integer("status").notNull()
 })
