@@ -1,41 +1,48 @@
-import { eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/better-sqlite3";
-import { migrate } from "drizzle-orm/better-sqlite3/migrator";
-import Database from "better-sqlite3";
 import { z } from "zod";
-
 import { publicProcedure, router } from "./trpc";
 
-import { todos } from "@/server/db/schema";
-
-const sqlite = new Database("sqlite.db")
-const db = drizzle(sqlite);
-
-migrate(db, { migrationsFolder: "drizzle"});
+let todos: { id: number, title: string; description: string; creationDate: string; completed: boolean }[] = [];
+let nextId = 1;
 
 export const appRouter = router({
-  getTodos: publicProcedure.query(async () => {
-    return await db.select().from(todos).all();
-  }),
-  addTodo: publicProcedure.input(z.string()).mutation(async (opts) => {
-    await db.insert(todos).values({ descricao: opts.input, done: 0 }).run();
-    return true;
-  }),
+  
+  getTodos: publicProcedure
+    .query(() => {
+      return todos;
+    }),
+
+  addTodo: publicProcedure
+    .input(
+      z.object({ title: z.string(), description: z.string() })
+    )
+    .mutation(
+      ({ input }) => {
+        let date = new Date();
+        let todoDate = date.getFullYear() + ' ' + date.getMonth() + ' ' + date.getDate()
+        const todo = { id: nextId++, title: input.title, description: input.description, creationDate: todoDate, completed: false };
+        return true;
+    }),
+
   setDone: publicProcedure
     .input(
-      z.object({
-        id: z.number(),
-        status: z.number(),
-      })
+      z.number()
     )
-    .mutation(async (opts) => {
-      await db
-        .update(todos)
-        .set({ status: opts.input.status })
-        .where(eq(todos.id, opts.input.id))
-        .run();
-      return true;
-    })
+    .mutation(({ input }) => {
+      const todo = todos.find(t => t.id === input);
+      if (todo) todo.completed = !todo.completed;
+      return todo;
+    }),
+
+  deleteTodo: publicProcedure
+    .input(
+      z.number()
+    )
+    .mutation(
+      ({input}) => {
+        todos = todos.filter(t => t.id !== input);
+        return { success: true };
+    }),
+    
 });
 
 export type AppRouter = typeof appRouter;
