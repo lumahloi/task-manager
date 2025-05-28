@@ -7,7 +7,9 @@ import { serverClient } from "../_trpc/serverClient";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
+
+import NewTodo from "./NewTodo";
 
 export default function TodoList({
   initialTodos,
@@ -18,12 +20,6 @@ export default function TodoList({
     initialData: initialTodos,
     refetchOnMount: false,
     refetchOnReconnect: false,
-  });
-
-  const addTodo = trpc.addTodo.useMutation({
-    onSettled: () => {
-      getTodos.refetch();
-    },
   });
 
   const setDone = trpc.setDone.useMutation({
@@ -44,14 +40,13 @@ export default function TodoList({
     },
   });
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+
   const [editId, setEditId] = useState<number | null>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
 
   return (
-    <main className="max-w-2xl mx-auto py-10 px-4">
+    <main className="mx-auto p-20">
       <h1 className="text-3xl font-bold mb-6 text-center">
         Gerenciador de Tarefas
       </h1>
@@ -66,7 +61,7 @@ export default function TodoList({
               <Checkbox
                 id={`check-${todo.id}`}
                 checked={!!todo.completed}
-                onCheckedChange={(checked) => {
+                onCheckedChange={() => {
                   setDone.mutate(todo.id);
                 }}
               />
@@ -150,33 +145,7 @@ export default function TodoList({
         ))}
       </div>
 
-      <Card className="p-6 shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Nova Tarefa</h2>
-        <div className="space-y-4">
-          <Input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Título"
-          />
-          <Input
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Descrição"
-          />
-          <Button
-            variant="default"
-            onClick={() => {
-              if (title.length) {
-                addTodo.mutate({ title, description });
-                setTitle("");
-                setDescription("");
-              }
-            }}
-          >
-            Adicionar
-          </Button>
-        </div>
-      </Card>
+      <NewTodo />
     </main>
   );
 }
