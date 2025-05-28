@@ -29,7 +29,7 @@ export default function TodoList({
   return (
     <main className="mx-auto p-12">
       <h1 className="text-3xl font-bold mb-6 text-center">
-        Gerenciador de Tarefas
+        Task Manager
       </h1>
 
       <Card className="p-6 shadow-md lg:w-1/2 mx-auto mb-10 h-80 overflow-y-auto">
@@ -41,7 +41,7 @@ export default function TodoList({
       <NewTodo />
 
       <footer>
-        <p className="text-center text-xs mt-5">© 2025 Gerenciador de Tarefas. Todos os direitos reservados. Feito por <a href="https://www.github.com/lumahloi" className="font-bold">Lumah Pereira</a>.</p>
+        <p className="text-center text-xs mt-5">© 2025 Task Manager. All rights reserved. Made by <a href="https://www.github.com/lumahloi" className="font-bold">Lumah Pereira</a>.</p>
       </footer>
     </main>
   );

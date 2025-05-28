@@ -43,20 +43,20 @@ export default function Todo({
   const deleteTodo = trpc.deleteTodo.useMutation({
     onSuccess: () => {
       getTodos.refetch();
-      toast.success("Tarefa deletada com sucesso.");
+      toast.success("Successfully deleted task.");
     },
     onError: (error) => {
-      toast.error("Erro ao deletar a tarefa: " + error.message);
+      toast.error("Error in task deletion: " + error.message);
     },
   });
 
   const changeTodo = trpc.changeTodo.useMutation({
     onSuccess: () => {
-      toast.success("Tarefa editada com sucesso.");
+      toast.success("Successfully edited task.");
       getTodos.refetch();
     },
     onError: (error) => {
-      toast.error("Erro ao editar a tarefa: " + error.message);
+      toast.error("Error in task edition: " + error.message);
     },
   });
 
@@ -112,9 +112,9 @@ export default function Todo({
 
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Tem certeza?</AlertDialogTitle>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                Quer mesmo deletar esta tarefa?
+                Do you really wish to delete this task?
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -124,9 +124,9 @@ export default function Todo({
                   setShowDialog(false);
                 }}
               >
-                Sim
+                Yes
               </AlertDialogAction>
-              <AlertDialogCancel>Não</AlertDialogCancel>
+              <AlertDialogCancel>No</AlertDialogCancel>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
@@ -148,27 +148,27 @@ export default function Todo({
 
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Editar tarefa</AlertDialogTitle>
+              <AlertDialogTitle>Edit Task</AlertDialogTitle>
 
               <AlertDialogDescription>
                 <div className="space-y-2 flex flex-row justify-between">
                   <div className="flex flex-col self-center w-full">
                     <Label htmlFor="title" className="font-semibold mb-3 mt-5">
-                      Título
+                      Title
                     </Label>
                     <Input
                       value={editTitle}
                       onChange={(e) => setEditTitle(e.target.value)}
-                      placeholder="Título"
+                      placeholder="Title"
                       className="w-full mb-5"
                     />
                     <Label htmlFor="title" className="font-semibold mb-3">
-                      Informações adicionais
+                      Additional information
                     </Label>
                     <Input
                       value={editDescription}
                       onChange={(e) => setEditDescription(e.target.value)}
-                      placeholder="Descrição"
+                      placeholder="Additional information"
                       className="w-full mb-5"
                     />
                   </div>
@@ -178,7 +178,7 @@ export default function Todo({
 
             <AlertDialogFooter>
               <AlertDialogCancel onClick={() => setEditId(null)}>
-                Voltar
+                Back
               </AlertDialogCancel>
               <AlertDialogAction
                 onClick={() => {
@@ -197,7 +197,7 @@ export default function Todo({
                   setEditId(null);
                 }}
               >
-                Confirmar edições
+                Confirm editions
                 <Check />
               </AlertDialogAction>
             </AlertDialogFooter>
@@ -211,8 +211,7 @@ export default function Todo({
             <AlertDialogHeader>
               <AlertDialogTitle>Título obrigatório</AlertDialogTitle>
               <AlertDialogDescription>
-                O título da tarefa não pode estar vazio. Por favor, insira um
-                título antes de salvar.
+                Title can't be empty. Please insert a title for your task before saving.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

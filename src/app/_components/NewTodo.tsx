@@ -35,11 +35,11 @@ export default function NewTodo({
 
   const addTodo = trpc.addTodo.useMutation({
     onSuccess: () => {
-      toast.success("Tarefa criada com sucesso.");
+      toast.success("Task successfully created.");
       getTodos.refetch();
     },
     onError: (error) => {
-      toast.error("Erro ao criar a tarefa: " + error.message);
+      toast.error("Error in task creation: " + error.message);
     },
   });
 
@@ -60,19 +60,19 @@ export default function NewTodo({
 
   return (
     <Card className="p-6 shadow-md lg:w-1/2 mx-auto">
-      <h2 className="text-xl font-semibold">Adicionar Tarefa</h2>
+      <h2 className="text-xl font-semibold">Create Task</h2>
       <div className="flex justify-between items-end space-x-4 mt-2">
         <div className="flex flex-col">
           <div className="flex flex-row items-center mb-2">
             <Label htmlFor="title" className="font-semibold">
-              Título
+              Title
             </Label>
             <span className="text-red-600 ml-1">*</span>
           </div>
           <Input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Terminar trabalho de casa"
+            placeholder="Finish homework"
             type="text"
             id="title"
             className="w-52"
@@ -81,12 +81,12 @@ export default function NewTodo({
 
         <div className="flex flex-col">
           <Label htmlFor="descricao" className="font-semibold mb-2">
-            Informações adicionais
+            Additional information
           </Label>
           <Input
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Começar a partir da página 87"
+            placeholder="Start on page 87"
             type="text"
             id="descricao"
             className="w-64"
@@ -97,14 +97,14 @@ export default function NewTodo({
           <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
             <Button variant="default" onClick={handleAddTodo}>
               <SquarePlus />
-              Adicionar
+              Create
             </Button>
 
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Operação inválida</AlertDialogTitle>
+                <AlertDialogTitle>Invalid Operation</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Adicione um título à sua tarefa.
+                  Add a title to your task.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>

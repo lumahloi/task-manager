@@ -22,7 +22,7 @@ export const appRouter = router({
   addTodo: publicProcedure
     .input(
       z.object({ 
-        title: z.string().min(1, "O título da tarefa é obrigatório."), 
+        title: z.string().min(1, "Task's title is obrigatory."), 
         description: z.string() 
       })
     )
@@ -50,7 +50,7 @@ export const appRouter = router({
       if (!todo) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: `Tarefa com id ${input} não encontrada.`,
+          message: `Couldn't find Task with id ${input}.`,
         });
       }
 
@@ -67,7 +67,7 @@ export const appRouter = router({
       if (!exists) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: `Tarefa com id ${input} não encontrada.`,
+          message: `Couldn't find task with id ${input}.`,
         });
       }
 
@@ -78,7 +78,7 @@ export const appRouter = router({
     changeTodo: publicProcedure
       .input(z.object({ 
         id: z.number(), 
-        title: z.string().min(1, "Título é obrigatório."),
+        title: z.string().min(1, "Title is obrigatory."),
         description: z.string(), 
         creationDate: z.string(), 
         completed: z.boolean() 
@@ -88,7 +88,7 @@ export const appRouter = router({
         if (index === -1) {
           throw new TRPCError({
             code: "NOT_FOUND",
-            message: `Tarefa com id ${input.id} não encontrada.`,
+            message: `Couldn't find task with id ${input}.`,
           });
         }
 

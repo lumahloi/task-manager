@@ -6,8 +6,8 @@ import Provider from "@/app/_trpc/Provider";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
-  title: 'Gerenciador de Tarefas',
-  description: 'App criado par auxiliar na organização de tarefas.',
+  title: 'Task Manager',
+  description: 'App made to manage tasks.',
 }
 
 export default function RootLayout({
