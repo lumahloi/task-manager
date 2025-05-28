@@ -80,10 +80,23 @@ export default function Todo({
 
       <div className="flex-1 self-center">
         <div>
-          <label htmlFor={`check-${todo.id}`} className="block font-semibold">
+          <label
+            htmlFor={`check-${todo.id}`}
+            className={`block font-semibold ${
+              todo.completed ? "line-through text-gray-500" : ""
+            }`}
+          >
             {todo.title}
           </label>
-          <p className="text-sm text-muted-foreground">{todo.description}</p>
+          <p
+            className={`text-sm ${
+              todo.completed
+                ? "line-through text-gray-500"
+                : "text-muted-foreground"
+            }`}
+          >
+            {todo.description}
+          </p>
         </div>
       </div>
 

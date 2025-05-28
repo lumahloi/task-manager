@@ -19,6 +19,13 @@ export default function TodoList({
     refetchOnReconnect: false,
   });
 
+  const sortedTodos = getTodos.data
+    ? [
+        ...getTodos.data.filter((todo) => !todo.completed),
+        ...getTodos.data.filter((todo) => todo.completed),
+      ]
+    : [];
+
   return (
     <main className="mx-auto p-16">
       <h1 className="text-3xl font-bold mb-6 text-center">
@@ -26,7 +33,7 @@ export default function TodoList({
       </h1>
 
       <Card className="p-6 shadow-md lg:w-1/2 mx-auto mb-10 h-80 overflow-y-auto">
-        {getTodos?.data?.map((todo) => (
+        {sortedTodos.map((todo) => (
           <Todo key={todo.id} todo={todo} />
         ))}
       </Card>
