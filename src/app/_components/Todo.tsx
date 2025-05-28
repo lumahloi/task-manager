@@ -54,6 +54,7 @@ export default function Todo({
   const [editId, setEditId] = useState<number | null>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
+  const [showDialog, setShowDialog] = useState(false);
 
   return (
     <div className="flex items-start space-x-4 w-full" key={todo.id}>
@@ -77,13 +78,33 @@ export default function Todo({
       </div>
 
       <div className="flex flex-row gap-2 self-center">
-        <Button
-          variant="destructive"
-          size="sm"
-          onClick={() => deleteTodo.mutate(todo.id)}
-        >
-          <Trash2 />
-        </Button>
+        <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+          <Button 
+            variant="destructive" 
+            size="sm" 
+            onClick={() => setShowDialog(true)}
+          >
+            <Trash2 />
+          </Button>
+
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Tem certeza?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Quer mesmo deletar esta tarefa?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogAction onClick={() => {
+                deleteTodo.mutate(todo.id)
+                setShowDialog(false)
+              }}>
+                Sim
+              </AlertDialogAction>
+              <AlertDialogCancel>Não</AlertDialogCancel>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         <AlertDialog>
           <AlertDialogTrigger asChild>
