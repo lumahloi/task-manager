@@ -39,7 +39,6 @@ export default function TodoList({
   return (
     <div>
       <div>
-        <label htmlFor="content">Content</label>
         {getTodos?.data?.map((todo) => (
           <div key={todo.id}>
             <input

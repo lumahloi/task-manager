@@ -19,7 +19,16 @@ export const appRouter = router({
       ({ input }) => {
         let date = new Date();
         let todoDate = date.getFullYear() + ' ' + date.getMonth() + ' ' + date.getDate()
-        const todo = { id: nextId++, title: input.title, description: input.description, creationDate: todoDate, completed: false };
+        
+        const todo = { 
+          id: nextId++, 
+          title: input.title, 
+          description: input.description, 
+          creationDate: todoDate, 
+          completed: false 
+        };
+
+        todos.push(todo);
         return true;
     }),
 
