@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Manager
+[![React](https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB)](#) [![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white)](#) [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)](#) [![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](#) [![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000?logo=shadcnui&logoColor=fff)](#)
 
-## Getting Started
+In need of organization? Then **Task Manager** is the perfect application for you. Organize your tasks and never feel lost again.
 
-First, run the development server:
+## Technologies
+- **Frontend**: TypeScript, TailwindCSS;
+  - React, Next.js, shadcn/ui.
+- **Backend**: tRPC;
+- **Database**: local storage.
 
+## Screenshots
+[Home](./docs/screenshots/home2.png)
+
+## Functionalities
+Create, read, update and delete tasks.
+
+## How to run locally
+Step by step guide of how to run the project locally on your machine.
+
+### Pre-requisites
+- **Git**: install the latest version from the official website by clicking [here](https://git-scm.com/downloads);
+- **Node.js**: install the latest version from the official website by clicking [here](https://nodejs.org/pt/download);
+
+### Installing
+Run the command
+First, clone the repository.
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/lumahloi/task-manager/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Install your dependencies.
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Running locally
+Open a terminal and run the server.
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## tRPC endpoints
+Check all available endpoints clicking [here](./docs/endpoints.md)
 
-## Learn More
+## Author
+<img src="https://github.com/lumahloi.png" width="80" align="left"/>
 
-To learn more about Next.js, take a look at the following resources:
+***Lumah Pereira***
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[![LinkedIn](https://custom-icon-badges.demolab.com/badge/LinkedIn-0A66C2?logo=linkedin-white&logoColor=fff)](https://www.linkedin.com/in/lumah-pereira) [![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?logo=github&logoColor=white)](https://www.github.com/lumahloi) [![Portfolio](https://img.shields.io/badge/Portfolio-D47CBC.svg?logo=vercel&logoColor=white)](https://www.lumah-pereira.vercel.app)
