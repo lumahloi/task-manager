@@ -6,8 +6,8 @@ import Provider from "@/app/_trpc/Provider";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
-  title: 'To Do App',
-  description: 'To Do App made to help task and duty management.',
+  title: 'Gerenciador de Tarefas',
+  description: 'App criado par auxiliar na organização de tarefas.',
 }
 
 export default function RootLayout({
@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="pt" className="dark">
       <body>
         <Provider>{children}</Provider>
         <Toaster richColors position="top-center" />

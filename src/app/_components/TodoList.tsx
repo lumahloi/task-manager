@@ -27,7 +27,7 @@ export default function TodoList({
     : [];
 
   return (
-    <main className="mx-auto p-16">
+    <main className="mx-auto p-12">
       <h1 className="text-3xl font-bold mb-6 text-center">
         Gerenciador de Tarefas
       </h1>
@@ -39,6 +39,10 @@ export default function TodoList({
       </Card>
 
       <NewTodo />
+
+      <footer>
+        <p className="text-center text-xs mt-5">© 2025 Gerenciador de Tarefas. Todos os direitos reservados. Feito por <a href="https://www.github.com/lumahloi" className="font-bold">Lumah Pereira</a>.</p>
+      </footer>
     </main>
   );
 }
