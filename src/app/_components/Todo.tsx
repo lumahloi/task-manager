@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -40,8 +41,12 @@ export default function Todo({
   });
 
   const deleteTodo = trpc.deleteTodo.useMutation({
-    onSettled: () => {
+    onSuccess: () => {
       getTodos.refetch();
+      toast.success("Tarefa deletada com sucesso.");
+    },
+    onError: (error) => {
+      toast.error("Erro ao deletar a tarefa: " + error.message);
     },
   });
 
@@ -79,9 +84,9 @@ export default function Todo({
 
       <div className="flex flex-row gap-2 self-center">
         <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
-          <Button 
-            variant="destructive" 
-            size="sm" 
+          <Button
+            variant="destructive"
+            size="sm"
             onClick={() => setShowDialog(true)}
           >
             <Trash2 />
@@ -95,10 +100,12 @@ export default function Todo({
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogAction onClick={() => {
-                deleteTodo.mutate(todo.id)
-                setShowDialog(false)
-              }}>
+              <AlertDialogAction
+                onClick={() => {
+                  deleteTodo.mutate(todo.id);
+                  setShowDialog(false);
+                }}
+              >
                 Sim
               </AlertDialogAction>
               <AlertDialogCancel>Não</AlertDialogCancel>
@@ -167,7 +174,6 @@ export default function Todo({
                   setEditId(null);
                 }}
               >
-                {" "}
                 Confirmar edições
                 <Check />
               </AlertDialogAction>
@@ -175,7 +181,6 @@ export default function Todo({
           </AlertDialogContent>
         </AlertDialog>
       </div>
-      {/* )} */}
     </div>
   );
 }
