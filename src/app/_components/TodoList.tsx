@@ -9,21 +9,30 @@ export default function TodoList({
 }:{
   initialTodos: Awaited<ReturnType<typeof serverClient["getTodos"]>>
 }) {
+
   const getTodos = trpc.getTodos.useQuery(undefined, {
     initialData: initialTodos,
     refetchOnMount: false,
     refetchOnReconnect: false,
   });
+
   const addTodo = trpc.addTodo.useMutation({
     onSettled: () => {
       getTodos.refetch();
     },
   });
+
   const setDone = trpc.setDone.useMutation({
     onSettled: () => {
       getTodos.refetch();
     },
   });
+
+  const deleteTodo = trpc.deleteTodo.useMutation({
+    onSettled: () => {
+      getTodos.refetch();
+    },
+  })
 
   const [content, setContent] = useState("");
 
@@ -36,15 +45,19 @@ export default function TodoList({
             <input
               id={`check-${todo.id}`}
               type="checkbox"
-              checked={!!todo.status}
+              checked={!!todo.completed}
               onChange={async () => {
-                setDone.mutate({
-                  id: todo.id,
-                  status: todo.status ? 0 : 1,
-                });
+                setDone.mutate(todo.id);
               }}
             />
-            <label htmlFor={`check-${todo.id}`}>{todo.titulo}</label>
+            <label htmlFor={`check-${todo.id}`}>{todo.title}</label>
+            <button
+              onClick={() => {
+                deleteTodo.mutate(todo.id)
+              }}
+            >
+              Delete Todo
+            </button>
           </div>
         ))}
       </div>
@@ -59,7 +72,10 @@ export default function TodoList({
         <button
           onClick={async () => {
             if (content.length) {
-              addTodo.mutate(content);
+              addTodo.mutate({
+                title: content,
+                description: content
+              });
               setContent("");
             }
           }}
