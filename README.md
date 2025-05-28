@@ -10,7 +10,7 @@ In need of organization? Then **Task Manager** is the perfect application for yo
 - **Database**: local storage.
 
 ## Screenshots
-[Home](./docs/screenshots/home2.png)
+![Home](./docs/screenshots/home2.png)
 
 ## Functionalities
 Create, read, update and delete tasks.
@@ -41,7 +41,7 @@ npm run dev
 ```
 
 ## tRPC endpoints
-Check all available endpoints clicking [here](./docs/endpoints.md)
+Check all available endpoints clicking [here](./docs/endpoints.md).
 
 ## Author
 <img src="https://github.com/lumahloi.png" width="80" align="left"/>
