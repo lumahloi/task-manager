@@ -4,6 +4,10 @@ import { useState } from "react";
 import { trpc } from "../_trpc/client";
 import { serverClient } from "../_trpc/serverClient";
 
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+
 export default function TodoList({
   initialTodos,
 }: {
@@ -50,49 +54,59 @@ export default function TodoList({
       <div>
         {getTodos?.data?.map((todo) => (
           <div key={todo.id}>
-            <input
+            <Checkbox
               id={`check-${todo.id}`}
-              type="checkbox"
+              // type="checkbox"
               checked={!!todo.completed}
-              onChange={async () => {
+              // onChange={async () => {
+              //   setDone.mutate(todo.id);
+              // }}
+              onCheckedChange={() => {
                 setDone.mutate(todo.id);
               }}
             />
             {editId === todo.id ? (
               <>
-                <input
+                <Input
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
                 />
-                <input
+                <Input
                   value={editDescription}
                   onChange={(e) => setEditDescription(e.target.value)}
                 />
-                <button
+                <Button
+                  variant="outline"
                   onClick={() => {
                     changeTodo.mutate({
                       id: todo.id,
                       title: editTitle,
                       description: editDescription,
                       creationDate: todo.creationDate,
-                      completed: todo.completed
+                      completed: todo.completed,
                     });
                     setEditId(null);
                   }}
                 >
                   Confirmar
-                </button>
-                <button onClick={() => setEditId(null)}>Cancelar</button>
+                </Button>
+                <Button variant="outline" onClick={() => setEditId(null)}>
+                  Cancelar
+                </Button>
               </>
             ) : (
               <>
                 <label htmlFor={`check-${todo.id}`}>
                   {todo.title} {todo.description}
                 </label>
-                <button onClick={() => deleteTodo.mutate(todo.id)}>
+                <Button
+                  variant="outline"
+                  onClick={() => deleteTodo.mutate(todo.id)}
+                >
                   Delete Todo
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="outline"
                   onClick={() => {
                     setEditId(todo.id);
                     setEditTitle(todo.title);
@@ -100,7 +114,7 @@ export default function TodoList({
                   }}
                 >
                   Edit Todo
-                </button>
+                </Button>
               </>
             )}
           </div>
@@ -108,17 +122,18 @@ export default function TodoList({
       </div>
 
       <div>
-        <input
+        <Input
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <input
+        <Input
           id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <button
+        <Button
+          variant="outline"
           onClick={async () => {
             if (title.length) {
               addTodo.mutate({
@@ -131,7 +146,7 @@ export default function TodoList({
           }}
         >
           Add Todo
-        </button>
+        </Button>
       </div>
     </div>
   );
