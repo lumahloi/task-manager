@@ -5,11 +5,10 @@ import { trpc } from "../_trpc/client";
 import { serverClient } from "../_trpc/serverClient";
 
 export default function TodoList({
-  initialTodos
-}:{
-  initialTodos: Awaited<ReturnType<typeof serverClient["getTodos"]>>
+  initialTodos,
+}: {
+  initialTodos: Awaited<ReturnType<(typeof serverClient)["getTodos"]>>;
 }) {
-
   const getTodos = trpc.getTodos.useQuery(undefined, {
     initialData: initialTodos,
     refetchOnMount: false,
@@ -32,9 +31,19 @@ export default function TodoList({
     onSettled: () => {
       getTodos.refetch();
     },
-  })
+  });
 
-  const [content, setContent] = useState("");
+  const changeTodo = trpc.changeTodo.useMutation({
+    onSettled: () => {
+      getTodos.refetch();
+    },
+  });
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [editId, setEditId] = useState<number | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
 
   return (
     <div>
@@ -49,33 +58,75 @@ export default function TodoList({
                 setDone.mutate(todo.id);
               }}
             />
-            <label htmlFor={`check-${todo.id}`}>{todo.title}</label>
-            <button
-              onClick={() => {
-                deleteTodo.mutate(todo.id)
-              }}
-            >
-              Delete Todo
-            </button>
+            {editId === todo.id ? (
+              <>
+                <input
+                  value={editTitle}
+                  onChange={(e) => setEditTitle(e.target.value)}
+                />
+                <input
+                  value={editDescription}
+                  onChange={(e) => setEditDescription(e.target.value)}
+                />
+                <button
+                  onClick={() => {
+                    changeTodo.mutate({
+                      id: todo.id,
+                      title: editTitle,
+                      description: editDescription,
+                      creationDate: todo.creationDate,
+                      completed: todo.completed
+                    });
+                    setEditId(null);
+                  }}
+                >
+                  Confirmar
+                </button>
+                <button onClick={() => setEditId(null)}>Cancelar</button>
+              </>
+            ) : (
+              <>
+                <label htmlFor={`check-${todo.id}`}>
+                  {todo.title} {todo.description}
+                </label>
+                <button onClick={() => deleteTodo.mutate(todo.id)}>
+                  Delete Todo
+                </button>
+                <button
+                  onClick={() => {
+                    setEditId(todo.id);
+                    setEditTitle(todo.title);
+                    setEditDescription(todo.description);
+                  }}
+                >
+                  Edit Todo
+                </button>
+              </>
+            )}
           </div>
         ))}
       </div>
 
       <div>
-        <label htmlFor="Content">Content</label>
-        <input 
-          id="content" 
-          value={content} 
-          onChange={(e) => setContent(e.target.value)} 
+        <input
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <input
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
         <button
           onClick={async () => {
-            if (content.length) {
+            if (title.length) {
               addTodo.mutate({
-                title: content,
-                description: content
+                title: title,
+                description: description,
               });
-              setContent("");
+              setTitle("");
+              setDescription("");
             }
           }}
         >
