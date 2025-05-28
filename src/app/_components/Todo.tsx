@@ -51,8 +51,12 @@ export default function Todo({
   });
 
   const changeTodo = trpc.changeTodo.useMutation({
-    onSettled: () => {
+    onSuccess: () => {
+      toast.success("Tarefa editada com sucesso.");
       getTodos.refetch();
+    },
+    onError: (error) => {
+      toast.error("Erro ao editar a tarefa: " + error.message);
     },
   });
 
