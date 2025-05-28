@@ -103,7 +103,7 @@ export default function NewTodo({
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogAction onClick={() => setShowDialog(false)}>
-                  Entendi
+                  Ok
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

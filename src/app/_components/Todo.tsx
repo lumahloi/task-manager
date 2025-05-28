@@ -60,6 +60,7 @@ export default function Todo({
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
   const [showDialog, setShowDialog] = useState(false);
+  const [showValidationDialog, setShowValidationDialog] = useState(false);
 
   return (
     <div className="flex items-start space-x-4 w-full" key={todo.id}>
@@ -164,6 +165,11 @@ export default function Todo({
               </AlertDialogCancel>
               <AlertDialogAction
                 onClick={() => {
+                  if (editTitle.trim() === "") {
+                    setShowValidationDialog(true);
+                    return;
+                  }
+
                   changeTodo.mutate({
                     id: todo.id,
                     title: editTitle,
@@ -176,6 +182,25 @@ export default function Todo({
               >
                 Confirmar edições
                 <Check />
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+        <AlertDialog
+          open={showValidationDialog}
+          onOpenChange={setShowValidationDialog}
+        >
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Título obrigatório</AlertDialogTitle>
+              <AlertDialogDescription>
+                O título da tarefa não pode estar vazio. Por favor, insira um
+                título antes de salvar.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogAction onClick={() => setShowValidationDialog(false)}>
+                Ok
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
