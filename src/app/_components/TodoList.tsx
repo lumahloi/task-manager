@@ -25,12 +25,9 @@ export default function TodoList({
         Gerenciador de Tarefas
       </h1>
 
-      <Card 
-        // className="flex items-start justify-between p-4 shadow-sm"
-        className="p-6 shadow-md lg:w-1/2 mx-auto mb-10 lg:h-80 lg:max-h-80"
-      >
+      <Card className="p-6 shadow-md lg:w-1/2 mx-auto mb-10 h-80 overflow-y-auto">
         {getTodos?.data?.map((todo) => (
-          <Todo key={todo.id} todo={todo}/>
+          <Todo key={todo.id} todo={todo} />
         ))}
       </Card>
 
