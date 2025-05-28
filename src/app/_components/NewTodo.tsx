@@ -8,8 +8,19 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
-import { SquarePlus } from "lucide-react"
+import { SquarePlus } from "lucide-react";
 
 export default function NewTodo({
   initialTodos,
@@ -30,6 +41,18 @@ export default function NewTodo({
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  const [showDialog, setShowDialog] = useState(false);
+
+  const handleAddTodo = () => {
+    if (title.trim().length === 0) {
+      setShowDialog(true);
+    } else {
+      addTodo.mutate({ title, description });
+      setTitle("");
+      setDescription("");
+    }
+  };
 
   return (
     <Card className="p-6 shadow-md lg:w-1/2 mx-auto">
@@ -67,19 +90,26 @@ export default function NewTodo({
         </div>
 
         <div className="self-end">
-          <Button
-            variant="default"
-            onClick={() => {
-              if (title.length) {
-                addTodo.mutate({ title, description });
-                setTitle("");
-                setDescription("");
-              }
-            }}
-          >
-            <SquarePlus />
-            Adicionar
-          </Button>
+          <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+            <Button variant="default" onClick={handleAddTodo}>
+              <SquarePlus />
+              Adicionar
+            </Button>
+
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Operação inválida</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Adicione um título à sua tarefa.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogAction onClick={() => setShowDialog(false)}>
+                  Entendi
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
     </Card>
