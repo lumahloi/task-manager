@@ -33,9 +33,13 @@ export default function TodoList({
       </h1>
 
       <Card className="p-6 shadow-md lg:w-1/2 mx-auto mb-10 h-80 overflow-y-auto">
-        {sortedTodos.map((todo) => (
-          <Todo key={todo.id} todo={todo} />
-        ))}
+        {sortedTodos.length === 0 ? (
+          <p className="text-muted-foreground text-center">
+            There's no tasks at the moment. Create your first task!
+          </p>
+        ) : (
+          sortedTodos.map((todo) => <Todo key={todo.id} todo={todo} />)
+        )}
       </Card>
 
       <NewTodo />
