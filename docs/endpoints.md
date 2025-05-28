@@ -110,4 +110,5 @@ Change task's title and description (if informed).
 }
 ```
 - ```NOT_FOUND```: if task with informed ID wasn't found.
+
 ⚠️ ```title``` should contain at least 1 character.
